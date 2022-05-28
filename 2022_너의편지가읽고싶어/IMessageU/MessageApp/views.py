@@ -52,7 +52,9 @@ def my_page(request, user_pk):
         print('false')
 
     messages = Message.objects.filter(receiver=user)
+    print('1')
     len_message = len(messages)
+    print('len')
 
     return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message,})
     

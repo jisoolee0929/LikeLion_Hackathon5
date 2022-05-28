@@ -7,12 +7,13 @@ from .models import User, UserManager
 def signup(request):
   if request.method == 'POST':
     email = request.POST['email']
+    nickname = request.POST['nickname']
     password = request.POST['password']
     found_user = User.objects.filter(email=email)
     if len(found_user):
       error = "이미 똑같은 아이디가 존재합니다."
       return render(request, 'signup.html', {'error':error})
-    new_user = User.objects.create_user(email=email, password=password)
+    new_user = User.objects.create_user(email=email, nickname=nickname, password=password)
     auth.login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
     return redirect('home')
   return render(request, 'signup.html')
