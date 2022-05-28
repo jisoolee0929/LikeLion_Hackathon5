@@ -32,7 +32,7 @@
         </form>
           <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit"> <a href="{% url 'signup' %}" style="text-decoration-line: none; text-decoration-color: aliceblue;"><i class="fa-solid fa-user-plus"></i>&nbsp;이메일로 회원가입</a></button>
           <hr class="my-4">
-          <h2 class="fs-5 fw-bold mb-3">간편하게 로그인을 하고 싶으시다구요?</h2>
+          <h2 class="fs-5 fw-bold mb-3">간편하게 편지함을 만들고 싶다면</h2>
           <form class='login' method='POST' action="{% provider_login_url 'kakao' %}">
             {% csrf_token %} 
             {{ form.as_p }}
@@ -40,7 +40,7 @@
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
             <input type="password" name="password">
             {% endif %} 
-            <button class="w-100 py-2 mb-2 btn btn-lg btn-warning rounded-3 primaryAction" type="submit">카톡으로 로그인</button>
+            <button class="w-100 py-2 mb-2 btn btn-lg btn-warning rounded-3 primaryAction" type="submit">카톡으로 회원가입</button>
           </form>
         
       </div>

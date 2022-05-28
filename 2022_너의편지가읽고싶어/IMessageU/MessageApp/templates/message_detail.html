@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+<div class="position-static d-block bg-light py-5" role="dialog">
+  <div class="card-dialog" role="document">
+    <div class="card-content rounded-4 shadow">
+      <div class="card-header p-5 pb-4 border-bottom-0">
+        <h2 class="fw-bold mb-0">{{ messages.title }}</h2>
+        <small>From: 편지 발신인(대체예정)</small>
+      </div>
+      <div class="card-body p-5 pt-0">
+        <p style="color: black;">{{ messages.content }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
