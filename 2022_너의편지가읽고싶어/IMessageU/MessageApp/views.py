@@ -19,6 +19,8 @@ def my_page(request, user_pk):
             update_message = Message.objects.filter(receiver = user)
             for message in update_message:
               message.left_time -= int(request.POST['totaltime'])
+              message.minute = int(message.left_time/60)
+              message.second = message.left_time%60
               message.save()
             if update_user.total_time == None:
               update_user.total_time = int(request.POST['totaltime'])
@@ -37,6 +39,9 @@ def my_page(request, user_pk):
           content=request.POST['content'],
           message_cover = request.POST['message_cover'],
           left_time = request.POST['left_time'],
+          nickname = request.POST['nickname'],
+          minute = int(request.POST['left_time'])/60,
+          second = int(request.POST['left_time'])%60,
     )
         
         return redirect('message_detail', new_message.pk)
@@ -48,16 +53,20 @@ def my_page(request, user_pk):
         print('false')
 
     messages = Message.objects.filter(receiver=user)
+    print('1')
     len_message = len(messages)
+    print('len')
 
     minutes = []
-    for i in range(len(messages)-1): 
+    print('min')
+    for i in range(len(messages)): 
         minutes.append(int(messages[i].left_time/60))
-    
-    seconds = []
-    for i in range(len(messages)-1):
-        seconds.append(messages[i].left_time%60)
+        print(messages[i].left_time/60)
+    print('minmin')
 
+    seconds = []
+    for i in range(len(messages)):
+        seconds.append(messages[i].left_time%60)
     return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message, 'minutes': minutes, 'seconds': seconds,})
 
 

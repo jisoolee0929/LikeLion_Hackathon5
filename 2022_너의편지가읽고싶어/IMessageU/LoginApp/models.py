@@ -37,6 +37,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
+    nickname = models.CharField(max_length=10)
     email = models.EmailField(_('email address'), unique=True)
 
     USERNAME_FIELD = 'email'
