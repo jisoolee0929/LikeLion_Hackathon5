@@ -50,7 +50,15 @@ def my_page(request, user_pk):
     messages = Message.objects.filter(receiver=user)
     len_message = len(messages)
 
-    return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message})
+    minutes = []
+    for i in range(len(messages)-1): 
+        minutes.append(int(messages[i].left_time/60))
+    
+    seconds = []
+    for i in range(len(messages)-1):
+        seconds.append(messages[i].left_time%60)
+
+    return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message, 'minutes': minutes, 'seconds': seconds,})
 
 
 def message_detail(request, message_pk):
