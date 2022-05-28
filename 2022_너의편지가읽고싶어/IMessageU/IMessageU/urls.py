@@ -22,8 +22,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #메인화면
     path('', views.home, name='home'), 
+    
+    #회원가입, 로그인, 로그아웃 화면
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     path('signup/', signup, name='signup'),
+    path('accounts/', include('allauth.urls')),
+
+    #메시지 관련 화면
 ]

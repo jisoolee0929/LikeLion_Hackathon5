@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from .models import User, UserManager
+import os
 #from django.contrib.auth.models import User
 
 # Create your views here.
@@ -31,6 +32,13 @@ def login(request):
     error = "아이디 또는 비밀번호가 틀립니다."
     return render(request, 'login.html', {'error': error})
   return render(request, 'login.html')
+
+# def kakao_login(request):
+#     app_rest_api_key = os.environ.get("KAKAO_REST_API_KEY")
+#     redirect_uri = main_domain + "users/login/kakao/callback"
+#     return redirect(
+#         f"https://kauth.kakao.com/oauth/authorize?client_id={'bab77f05cbf9ccf76b3b3b91d50f0a2f'}&redirect_uri={'home'}&response_type=code"
+#     )
 
 def logout(request):
   auth.logout(request)
