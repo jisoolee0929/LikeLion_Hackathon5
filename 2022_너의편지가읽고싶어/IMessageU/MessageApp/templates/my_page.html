@@ -28,7 +28,7 @@
 				{% endif %}
 
         <div class="character">
-            <img src="https://user-images.githubusercontent.com/101272544/170822671-0ba5e34f-4e2b-4b6f-8661-b6cb3d034af4.png" class="img-fluid" alt="character">
+            <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character">
             {% if user.is_authenticated and isHost == True %}
             <!-- 편지 목록보기 모달 버튼 -->
             <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://user-images.githubusercontent.com/101272544/170822714-6985f115-0fb7-4d3b-9505-ae019f6ac8bf.jpg" style="width:20%;" alt="list_message">
@@ -36,7 +36,7 @@
 
             <!-- 편지 작성하기 모달 버튼 -->
             {% if user.is_authenticated and isHost == False %}
-            <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/pencil.png?raw=true" style="width:10%;" alt="write_message">
+            <img type="button" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/pencil.png?raw=true" style="width:10%;" alt="write_message">
             {% endif %}
         </div>
 
@@ -119,7 +119,7 @@
                 {% for m in messages %} 
                 <div class="col-2">
                     {% if m.left_time >= 1 %} 
-                    <img src="https://user-images.githubusercontent.com/101272544/170832151-f5253f96-1ba3-4d62-ba32-2b55f0bfab86.jpg" style="width: 100%;" alt="time">
+                    <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png" style="width: 100%;" alt="time">
                     <small>{{ m.left_time }}초</small>
                     {% else %}
                         {% if m.message_cover == 1 %} 
