@@ -1,3 +1,4 @@
+from turtle import left, update
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Message
@@ -15,9 +16,19 @@ def my_page(request, user_pk):
     if request.method == 'POST':
         if request.user.pk == user_pk:
             update_user = User.objects.get(pk=user_pk)
-            update_user.total_time = int(request.POST['totaltime'])
-            update_user.save()
-            return redirect('my_page', user_pk)
+            update_message = Message.objects.filter(receiver = user)
+            for message in update_message:
+              message.left_time -= int(request.POST['totaltime'])
+              message.save()
+            if update_user.total_time == None:
+              update_user.total_time = int(request.POST['totaltime'])
+              update_user.save(update_fields=['total_time'])
+              return redirect('my_page', user_pk)
+            else:
+              added_time = update_user.total_time + int(request.POST['totaltime'])
+              update_user.total_time += int(request.POST['totaltime'])
+              update_user.save()
+              return redirect('my_page', user_pk)
         
         new_message = Message.objects.create(
           sender=request.user,
@@ -27,6 +38,7 @@ def my_page(request, user_pk):
           message_cover = request.POST['message_cover'],
           left_time = request.POST['left_time'],
     )
+        
         return redirect('message_detail', new_message.pk)
 
     isHost = True

@@ -9,7 +9,7 @@ class Message(models.Model):
 
   #편지 제목&내용
   title = models.CharField(max_length=255)
-  content = models.CharField(max_length=255)
+  content = models.TextField()
 
   #편지 작성시간
   created_time = models.DateTimeField(auto_now_add=True)

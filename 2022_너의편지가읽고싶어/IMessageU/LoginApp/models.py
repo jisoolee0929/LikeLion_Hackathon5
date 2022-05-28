@@ -42,7 +42,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()
-    
-    total_time = models.TimeField(blank=True, null=True)
+
+    total_time = models.IntegerField(blank=True, null=True)
     number = models.IntegerField(default=0)
 
