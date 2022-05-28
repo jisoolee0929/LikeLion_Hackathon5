@@ -19,5 +19,7 @@ class Message(models.Model):
 
   #메시지 발신인이 설정해놓은 공부시간
   left_time = models.IntegerField(default=0)
+  minute = models.IntegerField(default=0)
+  second = models.IntegerField(default=0)
 
   

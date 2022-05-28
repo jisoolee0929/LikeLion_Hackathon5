@@ -13,32 +13,59 @@
     <div class="card-body text-center">
         {% if user.is_authenticated %}
 				<div id = "demo" class = "time">
-			    <h3>타이머를 작동시켜 주세요</h3>
+			    <h3>IMessageU</h3>
 				</div>
-
-				<input type="button" value="start" onclick="starttimer()">
-				<input type="button" value="stop" onclick="stopTimer()">
+        {% endif %}
+        
+        {% if user.is_authenticated and isHost == True %}
+				<input style="background-color: #F89595; color:white;" type="button" value="start" onclick="starttimer()">
+				<input style="background-color: #F89595; color:white;" type="button" value="stop" onclick="stopTimer()">
 
 				<div>
 			    <form method="POST">
 	        {% csrf_token %}
 		        <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
-		        <button type="submit" onclick="submitTimer()">시간 제출</button>
+		        <button style="background-color: #F89595; color:white;" type="submit" onclick="submitTimer()">시간 제출</button>
 			    </form>                      
 				</div>
 				{% endif %}
 
         <div class="container">
-            <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character">
+          <div class="row">
             {% if user.is_authenticated and isHost == True %}
-            <!-- 편지 목록보기 모달 버튼 -->
-            <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://user-images.githubusercontent.com/101272544/170822714-6985f115-0fb7-4d3b-9505-ae019f6ac8bf.jpg" style="width:20%;" alt="list_message">
-            {% endif %}        
-
-            <!-- 편지 작성하기 모달 버튼 -->
+            <div class="col-6">
+            <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character">
+            </div>
+            <div class="col-6">
+              <!-- 편지 목록보기 모달 버튼 -->
+              {% if len_message <= 5 %}
+              <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%801.png?raw=true" style="width:100%;" alt="list_message">
+               
+              {% elif len_message <= 10 %}       
+              <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%802.png?raw=true" style="width:100%;" alt="list_message">
+              
+              {% elif len_message >= 11 %}       
+              <img type="button" class="btn-light bg-light" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%803.png?raw=true" style="width100%;" alt="list_message">
+              {%endif%}
+            </div>
+            {% else %}
+            <div class="col-6">
+              <!-- 편지 작성하기 모달 버튼 -->
             {% if user.is_authenticated and isHost == False %}
-            <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/pencil_balloon.png?raw=true" style="width:30%;" alt="write_message">
+            <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/pencilballoon.png?raw=true" style="width:80%;" alt="write_message">
             {% endif %}
+
+            </div>
+            <div class="col-6">
+              <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character">
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="row">
+            <button class="btn btn-sm btn-secondary"><a href="#" onclick="clip(); return false;">URL주소 복사</a></button>
+          </div>
+
         </div>
 
     </div>
@@ -118,10 +145,11 @@
             <div class="row">
                 {% if messages %}
                 {% for m in messages %} 
+                
                 <div class="col-2">
                     {% if m.left_time >= 1 %} 
                     <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/time.jpeg?raw=true" style="width: 100%;" alt="time">
-                    <small>{{ minutes }}분 {{ seconds }}초</small>
+                    <small>{{ m.minute }}분 {{m.second }}초</small>
                     {% else %}
                         {% if m.message_cover == 1 %} 
                         <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/heart.png?raw=true" style="width: 100%;" alt="❤️"></a>
@@ -176,6 +204,20 @@ function stopTimer(){
 function submitTimer(){
     time = 0
 }
+
+function clip(){
+
+var url = '';
+var textarea = document.createElement("textarea");
+document.body.appendChild(textarea);
+url = window.document.location.href;
+textarea.value = url;
+textarea.select();
+document.execCommand("copy");
+document.body.removeChild(textarea);
+alert("URL이 복사되었습니다.")
+}
+
 </script>
 {% endblock %}
 
