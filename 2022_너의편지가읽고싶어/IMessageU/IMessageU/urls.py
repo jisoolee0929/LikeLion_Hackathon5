@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from MessageApp import views
+from LoginApp.views import login, logout, signup
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'), 
+    path('login/', login, name='login'),
+    path('logout/', logout, name='logout'),
+    path('signup/', signup, name='signup'),
 ]

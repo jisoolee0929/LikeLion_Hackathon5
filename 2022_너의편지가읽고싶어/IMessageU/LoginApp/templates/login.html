@@ -1,0 +1,50 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+<div class="modal modal-signin position-static d-block bg-light py-5" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <!-- <h5 class="modal-title">Modal title</h5> -->
+        <h2 class="fw-bold mb-0">로그인</h2>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <form class="login" method="POST">
+          {% csrf_token %}
+          {% if error %}
+          <p>{{ error }}</p> 
+          {% endif %} 
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control rounded-3" id="floatingInput" name="email" placeholder="name@example.com">
+            <label for="floatingInput">이메일</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control rounded-3" id="floatingPassword" name="password" placeholder="Password">
+            <label for="floatingPassword">비밀번호</label>
+          </div>
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-light" type="submit">로그인</button>
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit"> <a href="{% url 'signup' %}" style="text-decoration-line: none; text-decoration-color: aliceblue;"><i class="fa-solid fa-user-plus"></i>&nbsp;이메일로 회원가입</a></button>
+          <hr class="my-4">
+          <h2 class="fs-5 fw-bold mb-3">간편하게 로그인을 하고 싶으시다구요?</h2>
+          <button class="w-100 py-2 mb-2 btn btn-warning rounded-3" type="submit">
+            <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook"></use></svg>
+            카카오톡으로 로그인하기
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!--부트스트랩-->
+  <script src="{% static 'js/bootstarp.min.js' %}"></script>
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/sidebar.js' %}"></script>
+  
+  <!--아이콘-->
+  <script src="https://kit.fontawesome.com/53bee35fbd.js" crossorigin="anonymous"></script>

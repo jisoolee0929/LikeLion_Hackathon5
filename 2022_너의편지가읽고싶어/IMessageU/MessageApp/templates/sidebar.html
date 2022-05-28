@@ -37,78 +37,13 @@
     
     <div class="nav-menu">
       <ul>
-        <li class="active"><a href="#"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;로그인</a></li>
-        <li><a href="#"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+        <li class="active"><a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;로그인</a></li>
+        <li><a href="{% url 'signup' %}"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
         <li><a href="#"><i class="fa-solid fa-bell"></i>&nbsp;공지사항</a></li>
         <li><a href="https://autrevie.notion.site/6f4169a63454461a80fd9a4d33cde73d"><i class="fa-solid fa-people-group"></i>&nbsp;개발진 스토리</a></li>
         <li><a href="#"><i class="fa-solid fa-question"></i>&nbsp;문의하기</a></li>
-        <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;로그아웃</a></li>
+        <li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;로그아웃</a></li>
       </ul>
     </div>
   </div>
-  
 </aside>
-<main>
-  <div class="site-section">
-    <div class="container">
-      <div class="row justify-content-center">
-
-        <div class="col-md-9">
-          <div class="row">
-
-            <div class="col-md-6">
-              <div class="d-flex post-entry">
-                <div class="custom-thumbnail">
-                  <img src="images/person_1.jpg" alt="Image" class="img-fluid">
-                </div>
-                <div class="post-content">
-                  <h3>편지 제목</h3>
-                  <div class="post-meta"><span>글쓴이:</span>박준완</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="d-flex post-entry">
-                <div class="custom-thumbnail">
-                  <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-                </div>
-                <div class="post-content">
-                  <h3>편지 제목2</h3>
-                  <div class="post-meta"><span>글쓴이:</span>신재현</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="d-flex post-entry">
-                <div class="custom-thumbnail">
-                  <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-                </div>
-                <div class="post-content">
-                  <h3>편지 제목3</h3>
-                  <div class="post-meta"><span>글쓴이:</span>서다은</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="d-flex post-entry">
-                <div class="custom-thumbnail">
-                  <img src="images/person_4.jpg" alt="Image" class="img-fluid">
-                </div>
-                <div class="post-content">
-                  <h3>편지 제목4</h3>
-                  <div class="post-meta"><span>글쓴이:</span>이지수</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-  </div>  
-</main>
