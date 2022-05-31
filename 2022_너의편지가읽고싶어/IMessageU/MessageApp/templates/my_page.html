@@ -16,19 +16,25 @@
 			    <h3>소중한 사람의 시험공부를 응원해주세요!</h3>
 				</div>
         {% endif %}
-        
+
         {% if user.is_authenticated and isHost == True %}
         <h3>와우! 현재까지 총 {{ user.total_time }}초를 공부하셨습니다!</h3>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <input type="button" class="btn btn-success" value="시작" onclick="starttimer()"></input>
-            <input type="button" class="btn btn-danger" value="중단" onclick="stopTimer()"></input>
-            <form method="POST">
-                {% csrf_token %}
-                    <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
-                    <button type="submit" class="btn btn-primary" onclick="submitTimer()">시간 제출</button>
-            </form>     
-          </div>    
-        {% endif %}             
+            <div id = "demo" class = "time">
+             <h2>타이머를 작동시켜 주세요</h2>
+            </div>
+            <input type="button" class="btn btn-success" value="start" onclick="starttimer()">
+            <input type="button" class="btn btn-danger" value="stop" onclick="stopTimer()">
+
+            <div>
+              <form method="POST">
+            {% csrf_token %}
+               <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
+               <button type="submit" class="btn btn-primary" onclick="submitTimer()">시간 제출</button>
+              </form>                      
+             </div>
+        {% endif %}
+        
+         
 	</div>
 
         <div class="container">
@@ -202,6 +208,20 @@ function stopTimer(){
 
 function submitTimer(){
     time = 0
+}
+
+
+function clip(){
+
+var url = '';
+var textarea = document.createElement("textarea");
+document.body.appendChild(textarea);
+url = window.document.location.href;
+textarea.value = url;
+textarea.select();
+document.execCommand("copy");
+document.body.removeChild(textarea);
+alert("URL이 복사되었습니다.")
 }
 
 </script>

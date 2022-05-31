@@ -4,9 +4,6 @@
   {% load static %}
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
   <link rel="stylesheet" href="../static/css/home.css">
   
 </head>
@@ -14,40 +11,27 @@
 <body> 
   <main>
     <div class="site-section">
-      <div class="container">
-        <div class="row justify-content-center">
             <div class = "all">
-                <div class="container" style="max-width: 500px;">
+                <div class="container" style="max-width: 600px;">
                     <div>
-                        <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/homeimg.png?raw=true" alt="로고 이미지 들어갈 자리">
+                        <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/homeimg3.png?raw=true" alt="로고 이미지 들어갈 자리">
                     </div>
                     {% if user.is_authenticated %}
                     <div>
-                        <a href="{% url 'my_page' user.pk  %}">내 편지함 바로가기</a>
+                        <a href="{% url 'my_page' user.pk  %}" style=" text-decoration: none;">내 편지함 바로가기</a>
                     </div>
                     {% endif %}
                     {% if user.is_anonymous %}
-                    <div>
-                        <a href="{% url 'login' %}">내 편지함 들어가기</a>
-                        <a href="{% url 'signup' %}">내 편지함 만들기</a>
+                    <div class = "buttonbar" style="display: flex; flex-direction: column;">
+                        <a href="{% url 'login' %}" style=" text-decoration: none;">내 편지함 들어가기</a>
+                        <a href="{% url 'signup' %}"style=" text-decoration: none;" >내 편지함 만들기</a>
                     </div>
                     {% endif %}
                     
                 </div>
-            
             </div>
-        </div>
-      </div>
     </div>  
   </main> 
 
-  <!--부트스트랩-->
-  <script src="{% static 'js/bootstarp.min.js' %}"></script>
-  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/popper.min.js' %}"></script>
-  <script src="{% static 'js/sidebar.js' %}"></script>
-  
-  <!--아이콘-->
-  <script src="https://kit.fontawesome.com/53bee35fbd.js" crossorigin="anonymous"></script>
 </body>
 </html>
