@@ -26,7 +26,7 @@
             <input type="button" class="btn btn-danger" value="stop" onclick="stopTimer()">
 
             <div>
-              <form method="POST">
+              <form method="POST" action="{% url 'time_submit' user.pk %}">
             {% csrf_token %}
                <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
                <button type="submit" class="btn btn-primary" onclick="submitTimer()">시간 제출</button>
@@ -89,7 +89,7 @@
         <div class="modal-body">
           <div class="container">
             <div class="row">
-                    <form id="contact-form" class="form" method="POST" role="form">
+                    <form id="contact-form" class="form" method="POST" role="form"> 
                         {% csrf_token %}
                         <div class="form-group">
                             <label class="form-label" for="name">닉네임</label>
