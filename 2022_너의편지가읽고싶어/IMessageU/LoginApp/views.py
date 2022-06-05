@@ -4,6 +4,24 @@ from .models import User, UserManager
 #from django.contrib.auth.models import User
 
 # Create your views here.
+def kakaosignup(request):
+  if request.method == 'POST':
+    email = request.POST['email']
+    found_user = User.objects.filter(email=email)
+    if len(found_user):
+      error = "이미 똑같은 아이디가 존재합니다."
+      return render(request, 'kakaosignup.html', {'error':error})
+    new_user = User.objects.create_user(email=email)
+    auth.login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+    return redirect('home')
+  return render(request, 'kakaosignup.html')
+
+def kakaologin(request):
+    if user is not None:
+      auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+      return redirect(request.GET.get('next', '/'))
+    return render(request, 'login.html')
+
 def signup(request):
   if request.method == 'POST':
     email = request.POST['email']
@@ -25,9 +43,6 @@ def login(request):
     user = auth.authenticate(request, email=email, password=password)
     if user is not None:
       auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-      #auth.login(request, user)
-
-      #return redirect('home')
       return redirect(request.GET.get('next', '/'))
     error = "아이디 또는 비밀번호가 틀립니다."
     return render(request, 'login.html', {'error': error})

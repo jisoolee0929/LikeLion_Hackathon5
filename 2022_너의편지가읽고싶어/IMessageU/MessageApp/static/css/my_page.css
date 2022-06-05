@@ -1,6 +1,7 @@
 textarea {
 	resize: none;
 }
+
 .form-label {
 	font-size: 12px;
 	color: #5e9bfc;
@@ -40,6 +41,7 @@ textarea {
     text-transform: uppercase;
     transition: all 0.25s ease 0s;
 }
+
 .btn-start-order:hover,.btn-start-order:active, .btn-start-order:focus {
 	border-color: #5e9bfc;
 	color: #5e9bfc;

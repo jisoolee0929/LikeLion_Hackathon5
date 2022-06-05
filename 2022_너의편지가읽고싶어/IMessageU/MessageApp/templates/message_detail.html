@@ -17,25 +17,19 @@
 </head>
 
 <body> 
+  {% include 'sidebar.html' %}
   <main>
     <div class="site-section">
       <div class="container">
         <div class="row justify-content-center">
           <div class="position-static d-block bg-light py-5" role="dialog">
             <div class="card-dialog" role="document">
-              <div class="redirect_home">
-                <a class="btn" href="{% url 'my_page' user.pk %}">메인페이지로</a>
-              </div>
-              <br>
-              <div class="card-content rounded-4 shadow" id="cover">
-                <div class="card-header p-5 pb-4 border-bottom-0">
-                  <h2 class="fw-bold mb-0">{{ messages.title }}</h2>
-                  <small>From: {{ messages.nickname }}</small>
+              <div class="card-content" id="cover">
+                <div class="card-body rounded-4 p-4 pb-3 shadow">
+                  <h2 class="fw-bold mb-0 border-bottom-0">{{ messages.title }}</h2>
+                  <small class="border-bottom-0">From: {{ messages.nickname }}</small>
+                  <p style="color: black;" class="pb-4 border-bottom-0">{{ messages.content }}</p>
                 </div>
-                <div class="card-body p-5 pt-0">
-                  <p style="color: black;">{{ messages.content }}</p>
-                </div>
-
               </div>
             </div>
           </div>

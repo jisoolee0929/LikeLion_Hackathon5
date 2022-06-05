@@ -25,7 +25,6 @@ class MailView(APIView):
 def home(request):
     return render(request, 'home.html')
 
-@login_required(login_url='login')
 def my_page(request, user_pk):
     user = User.objects.get(pk=user_pk)
     if request.method == 'POST':
@@ -64,6 +63,10 @@ def my_page(request, user_pk):
     len_message = len(messages)
     print('len')
 
+    msg_open = Message.objects.filter(left_time = 0, receiver = user)
+    len_open = len(msg_open)
+    len_closed = len_message - len_open
+
     minutes = []
     print('min')
     for i in range(len(messages)): 
@@ -74,8 +77,10 @@ def my_page(request, user_pk):
     seconds = []
     for i in range(len(messages)):
         seconds.append(messages[i].left_time%60)
-    return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message, 'minutes': minutes, 'seconds': seconds,})
+    # len_open: 열어본 편지 수, len_closed: 아직 안열린 편지 수,
+    return render(request, 'my_page.html', {'messages': messages, 'isHost': isHost, 'len_message': len_message, 'minutes': minutes, 'seconds': seconds, 'len_open': len_open, 'len_closed': len_closed,})
 
+@login_required(login_url='login')
 def message_detail(request, message_pk):
     messages = Message.objects.get(pk=message_pk)
 
@@ -92,6 +97,9 @@ def timer(request, user_pk):
               message.left_time -= int(request.POST['totaltime'])
               message.minute = int(message.left_time/60)
               message.second = message.left_time%60
+              #열람한 편지 수 기능 구현을 위해서 left_time이 음수값을 갖지 않게 함.
+              if message.left_time == -1:
+                  message.left_time = 0
               message.save()
             if update_user.total_time == None:
               update_user.total_time = int(request.POST['totaltime'])

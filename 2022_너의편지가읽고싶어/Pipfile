@@ -5,6 +5,13 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-allauth = "*"
+djangorestframework = "*"
+requests = "*"
+django-crispy-forms = "*"
+google = "*"
+google-api-python-client = "*"
+google-auth-oauthlib = "*"
 
 [dev-packages]
 

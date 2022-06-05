@@ -14,70 +14,32 @@
       <br/><br/><br/>
     </div>
     <div class="container-body text-center">
-      <!--로그인 안한 상태에서 친구의 편지함을 방문했을 때-->
-        {% if user.is_anonymous %}
-        <div class="card text-center rounded-4 p-3 pb-2">
-			    <h3>친구야, 너의 편지를 읽고싶어!</h3>
-          <p style="color: black;">
-          상대방은 당신이 설정한 시간만큼 공부를 해야 당신의 편지를 열 수 있습니다. 따뜻한 마음을 담은 편지를 친구에게 전하고, 친구의 공부까지 도와줄 수 있어요!<br/>
-         (편지를 작성하려면 <strong><u>로그인</u></strong>이 필요합니다. 왼쪽 상단 메뉴 버튼을 클릭하시고 회원가입을 먼저 해주세요!)
-          </p>
-				</div>
-        <div class="container">
-          <div class="row">
-            <div class="col-12" style="text-align: center;">
-              <!-- 편지 작성하기 모달 버튼(작동 안되게 해놨음) -->
-              <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal2" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/text_balloon.png?raw=true" style="width:40%; position: relative; top: 30px;" alt="write_message">
-              <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character" style="width: 70%;">
-            </div>
-          </div>
-        {% endif %}
-
         {% if user.is_authenticated and isHost == False %}
-				<div class="card text-center rounded-4 p-3 pb-2">
+				<div id = "demo" class = "time">
 			    <h3>상대방의 시험공부를 도와주세요</h3>
-          <p style="color:black;">상대방은 당신이 설정한 시간만큼 공부를 해야만 당신의 편지를 열 수 있습니다. 따뜻한 마음을 담은 편지를 친구에게 전하고, 친구의 공부까지 도와줄 수 있어요!<br/>
-            (연필을 클릭하고 편지를 작성해보세요!)</p>
+          <p>상대방은 당신이 설정한 시간만큼 공부를 해야만 당신의 편지를 열 수 있습니다. 친구의 공부를 도와줄 편지를 정성껏 써서 보내보세요.(편지를 작성하려면 연필을 클릭하세요!)</p>
 				</div>
         {% endif %}
 
         {% if user.is_authenticated and isHost == True %}
-        <div class="card text-center rounded-4 p-3 pb-2 bg-warning">
-          <h3>내 총 공부시간: {{ user.total_time }}초</h3>
-          <p style="color: black;">내 편지함 주소를 SNS에 공유하고 친구들로부터 편지를 받아보세요! <br/>p.s. 친구가 설정한 시간만큼 공부를 해야 편지를 열 수 있습니다 :) </p>
-          {% if user.is_authenticated and isHost == True %}
-          <div style="text-align:center;">
-            <a class="btn btn-light" onclick="clip(); return false;"><i class="fa-solid fa-arrow-up-from-bracket"></i><strong>&nbsp;내 편지함 공유하기</strong></a>
-          </div>
-          {% endif %}
-        </div>
-        <br/>
-        <div class="card rounded-4 p-2">
-          <div id = "demo" class = "time">
-            <h3>슬슬 공부 좀 해볼까...?</h3>
-          </div>
-          <div style="display: flex;">
-            <div class = "btnflex">
-              <label for="sucess">공부시작</label>
-              <button class="btn success" name="sucess" value="start" onclick="starttimer()"><img class = "btnimg" src="https://cdn-icons-png.flaticon.com/512/38/38483.png" alt="시작" style="width: 10%;"></button>
+        
+        <h3>현재까지 총 {{ user.total_time }}초를 공부하셨습니다!</h3>
+            <div id = "demo" class = "time">
+             <h2>타이머를 작동시켜 주세요</h2>
             </div>
-            <div>
-              <label for="stop">공부중단</label>
-              <button class="btn danger" name="stop" value="stop" onclick="stopTimer()"><img class="btnimg" src="https://cdn-icons-png.flaticon.com/512/64/64485.png" alt="중단" style="width: 10%;"></button>
-            </div>
+            <input type="button" class="btn btn-success" value="start" onclick="starttimer()">
+            <input type="button" class="btn btn-danger" value="stop" onclick="stopTimer()">
+
             <div>
               <form method="POST" action="{% url 'time_submit' user.pk %}">
-              {% csrf_token %}
-              <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
-              <label for="submit">시간제출</label>
-              <button type="submit" name = "제출하기" class="btn" onclick="submitTimer()"><img class="btnimg" src="https://cdn-icons-png.flaticon.com/512/2708/2708395.png" alt="제출" style="width: 10%;"></button>
+            {% csrf_token %}
+               <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
+               <button type="submit" class="btn btn-primary" onclick="submitTimer()">시간 제출</button>
               </form>                      
-            </div>  
-          </div>  
-        </div>
+             </div>
         {% endif %}
 	</div>
-  <br/>
+
         <div class="container">
             <div class="row">
                 {% if user.is_authenticated and isHost == True %}
@@ -92,7 +54,6 @@
                   {% endif %}                    
                     <!-- 편지 목록보기 모달 버튼 -->
                     <button class="btn position-relative" data-bs-toggle="modal" data-bs-target="#listMessageModal" alt="list_message">
-                      <span class="position-relative top-100 start-45 translate-middle badge rounded-pill bg-danger" style="bottom: 20px; left: 40px;">클릭!</span>
                       <span class="position-absolute top-50 start-50 translate-middle badge rounded-pill bg-primary">
                         {{ len_closed }}+
                         <span class="visually-hidden">안읽은 편지</span>
@@ -100,24 +61,37 @@
                       <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/mailbox.png?raw=true" style="width:60%; background:transparent;">
                     </button>
                   </div>
+                      <!-- {% if len_message <= 5 %}
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%801.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% elif len_message <= 10 %}    
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%802.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% elif len_message >= 11 %}
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%803.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% endif %} -->
                 </div>
-                {% endif %}                    
 
-
-                {% if user.is_authenticated and isHost == False %}
+                {% else %}
                 <div class="col-12" style="text-align: center;">
                   <!-- 편지 작성하기 모달 버튼 -->
-                  <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/text_balloon.png?raw=true" style="width:40%; position: relative; top: 30px;" alt="write_message">
+                  {% if user.is_authenticated and isHost == False %}
+                  <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/text_balloon.png?raw=true" style="width:50%;" alt="write_message">
+                  {% endif %}                      
                   <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character" style="width: 70%;">
                 </div>
                 {% endif %}
             </div>
+            {% if user.is_authenticated and isHost == True %}
+            <div style="text-align:center;">
+              <a class="btn btn-primary" onclick="clip(); return false;"><i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;내 편지함 공유하기</a>
+            </div>
+            {% endif %}
         </div>
     </div>
   </div>
 </div>
 
-<!-- 편지 작성하기 모달(로그인시) -->
+
+<!-- 편지 작성하기 모달 -->
 <div class="modal fade in" id="createMessageModal" tabindex="-1" aria-labelledby="createMessageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -245,7 +219,7 @@
             <br/>
             {% if len_message != 0 %}
             <div class="row">
-                <p>공부시간을 채우면 편지가 시계 모양에서 친구가 설정한 모양으로 자동으로 바뀝니다. 편지를 읽으려면 타이머로 공부시간을 제출하세요!</p>
+                <p>편지를 읽고 싶다면 열심히 공부하세요!</p>
             </div>
             {% endif %}
           </div>
@@ -260,12 +234,7 @@
 <script>
 let timer
 var time = 0
-var stop = document.querySelector(".danger");
-var start = document.querySelector(".success");
-
 function starttimer(){
-  start.disabled = true;
-  stop.disabled = false;
     var min = ""
     var sec = ""
     timer = setInterval(function(){
@@ -279,9 +248,6 @@ function starttimer(){
 
 function stopTimer(){
     clearInterval(timer);
-    start.disabled = false;
-    stop.disabled = true;
-
 }
 
 function submitTimer(){

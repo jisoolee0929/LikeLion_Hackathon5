@@ -1,3 +1,5 @@
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 .all{
   width: max-content;
   text-align: center;
@@ -36,7 +38,6 @@
 }
 
 a{
-
   text-decoration: none;
   font-size:1.5rem;
   color:white;
@@ -45,9 +46,12 @@ a{
   display:inline-block;
   background-color: rgba(1,1,1,0.8);
   border-radius: 15px;
-
-
 }
+
 .btn:active{
   transform: translateY(3px);
+}
+
+p {
+  font-family: 'nanumsquare';
 }
