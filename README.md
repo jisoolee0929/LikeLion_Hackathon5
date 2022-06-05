@@ -1,7 +1,7 @@
 
 # LikeLion_Hackathon5 
 pipenv shell
-pipenv install django==4.0.4
+pipenv install django==4.0.5
 pipenv install django-markdownx
 pipenv install django-crispy-forms
 pipenv install pillow
