@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Mini_handwriting';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_08@1.0/Mini_handwriting.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+.card-body {
+  flex: 1 1 auto;
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  color: var(--bs-card-color);
+  padding: 150px 70px 70px 70px !important;
+}
+
+.fw-bold {
+  font-family: 'Mini_handwriting';
+  font-size: 28px;
+  font-weight: 900;
+} 
+
+small {
+  font-family: 'Mini_handwriting';
+  font-size: 18px!important;
+}
+
+p {
+  font-family: 'Mini_handwriting';
+  font-size: 24px;
+}
+
+#cover{
+  min-height: 400px;
+  background-image: url('https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/splash.png?raw=true');
+  background-size: 100%;
+  background-color: transparent;
+  display:flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

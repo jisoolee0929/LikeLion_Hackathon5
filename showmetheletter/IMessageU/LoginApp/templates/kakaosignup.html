@@ -1,0 +1,48 @@
+{% load static %}
+{% load socialaccount %} 
+{% providers_media_js %} 
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+<div class="modal modal-signup position-static d-block bg-light py-5" tabindex="-1" role="dialog" id="modalSignup">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <!-- <h5 class="modal-title">Modal title</h5> -->
+        <h2 class="fw-bold mb-0">카카오톡으로 회원가입</h2>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+
+      <div class="modal-body p-5 pt-0">
+        <form class="signup" method="POST">
+          {% csrf_token %}
+          {% if error %}
+          <p>{{ error }}</p> 
+          {% endif %} 
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control rounded-3" id="floatingInput" name="email" placeholder="name@example.com">
+            <label for="floatingInput">이메일</label>
+            <small class="text-muted">name@example.com</small><br/>
+            <p>지금 등록하시는 이메일로 편지 도착 알림이 발송됩니다.<br/>자주 사용하시는 이메일을 입력해주세요.</p>
+          </div>
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">가입하기</button>
+          <small class="text-muted"></small>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <!--부트스트랩-->
+  <script src="{% static 'js/bootstarp.min.js' %}"></script>
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/sidebar.js' %}"></script>
+  
+  <!--아이콘-->
+  <script src="https://kit.fontawesome.com/53bee35fbd.js" crossorigin="anonymous"></script>

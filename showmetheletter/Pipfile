@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-allauth = "*"
+djangorestframework = "*"
+requests = "*"
+django-crispy-forms = "*"
+google = "*"
+google-api-python-client = "*"
+google-auth-oauthlib = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  
+</head>
+
+<body> 
+  <main>
+    <div class="site-section">
+            <div class = "all">
+                <div class="container" style="width: 600px; background-color: #FCEFA9;">
+                  <br><br><br><br>
+                    <div>
+                        <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/title.png?raw=true" alt="로고 이미지 들어갈 자리" style="top: 162px;
+                        left: 677px;
+                        width: 500px;
+                        height: 400px;">
+                    </div>
+                    <br><br><br>
+                    {% if user.is_authenticated %}
+                    <div>
+                        <a href="{% url 'my_page' user.pk  %}" style="  background: #FD997C 0% 0% no-repeat padding-box;
+                        border: 2.3px solid #1D1B1C;
+                        border-radius: 41px;
+                        opacity: 1;
+                        text-align: center;
+                        font: normal normal bold 30px/35px NanumSquare;
+                        letter-spacing: 0px;
+                        color: #1D1B1C;
+                        opacity: 1;">내 편지함 바로가기</a>
+                    </div>
+                    <p style="@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css'); font-family: 'NanumSquare';">친구의 편지함으로 가고 싶다면, 친구의 편지함 주소를 주소창에 다시 입력해주세요.</p>
+                    {% endif %}
+                    {% if user.is_anonymous %}
+                    <div class = "buttonbar" style="display: flex; flex-direction: column;">
+                        <a href="{% url 'login' %}" style=" background: #C7D4E4 0% 0% no-repeat padding-box;
+                        border: 2.3px solid #1D1B1C;
+                        border-radius: 41px;
+                        opacity: 1;
+                        text-align: center;
+                        font: normal normal bold 30px/35px NanumSquare;
+                        letter-spacing: 0px;
+                        color: #1D1B1C;
+                        opacity: 1;">내 편지함 들어가기</a>
+
+                        <a href="{% url 'signup' %}"style=" background: #FD997C 0% 0% no-repeat padding-box;
+                        border: 2.3px solid #1D1B1C;
+                        border-radius: 41px;
+                        opacity: 1;
+                        text-align: center;
+                        font: normal normal bold 30px/35px NanumSquare;
+                        letter-spacing: 0px;
+                        color: #1D1B1C;
+                        opacity: 1;" >내 편지함 만들기</a>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+    </div>  
+  </main> 
+
+</body>
+</html>

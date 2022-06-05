@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block css %}
+<link href="{% static 'css/my_page.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="width: 100%;">
+    <div class="container-header text-center">
+      <br/><br/><br/>
+    </div>
+    <div class="container-body text-center">
+        {% if user.is_authenticated and isHost == False %}
+				<div id = "demo" class = "time">
+			    <h3>상대방의 시험공부를 도와주세요</h3>
+          <p>상대방은 당신이 설정한 시간만큼 공부를 해야만 당신의 편지를 열 수 있습니다. 친구의 공부를 도와줄 편지를 정성껏 써서 보내보세요.(편지를 작성하려면 연필을 클릭하세요!)</p>
+				</div>
+        {% endif %}
+
+        {% if user.is_authenticated and isHost == True %}
+        
+        <h3>현재까지 총 {{ user.total_time }}초를 공부하셨습니다!</h3>
+            <div id = "demo" class = "time">
+             <h2>타이머를 작동시켜 주세요</h2>
+            </div>
+            <input type="button" class="btn btn-success" value="start" onclick="starttimer()">
+            <input type="button" class="btn btn-danger" value="stop" onclick="stopTimer()">
+
+            <div>
+              <form method="POST" action="{% url 'time_submit' user.pk %}">
+            {% csrf_token %}
+               <input type="number" id="totaltime" name="totaltime" tabindex="3" style="display:none;">
+               <button type="submit" class="btn btn-primary" onclick="submitTimer()">시간 제출</button>
+              </form>                      
+             </div>
+        {% endif %}
+	</div>
+
+        <div class="container">
+            <div class="row">
+                {% if user.is_authenticated and isHost == True %}
+                <div class="col-6">
+                    <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" style="width: 100%;" alt="character">
+                </div>
+    
+                <div class="col-6" style="display: flex; align-content: center; align-items:center;">
+                  {% if len_closed >= 1 %}
+                  <div style="text-align: center;">
+                    <span class="text-muted"><small>안읽은 편지가 있어요! 편지함을 클릭해보세요.</small></span>
+                  {% endif %}                    
+                    <!-- 편지 목록보기 모달 버튼 -->
+                    <button class="btn position-relative" data-bs-toggle="modal" data-bs-target="#listMessageModal" alt="list_message">
+                      <span class="position-absolute top-50 start-50 translate-middle badge rounded-pill bg-primary">
+                        {{ len_closed }}+
+                        <span class="visually-hidden">안읽은 편지</span>
+                      </span>
+                      <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/mailbox.png?raw=true" style="width:60%; background:transparent;">
+                    </button>
+                  </div>
+                      <!-- {% if len_message <= 5 %}
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%801.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% elif len_message <= 10 %}    
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%802.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% elif len_message >= 11 %}
+                      <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#listMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%ED%8E%B8%EC%A7%803.png?raw=true" style="width:100%; background:transparent;" alt="list_message">
+                      {% endif %} -->
+                </div>
+
+                {% else %}
+                <div class="col-12" style="text-align: center;">
+                  <!-- 편지 작성하기 모달 버튼 -->
+                  {% if user.is_authenticated and isHost == False %}
+                  <img type="button" class="img-fluid" data-bs-toggle="modal" data-bs-target="#createMessageModal" src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/text_balloon.png?raw=true" style="width:50%;" alt="write_message">
+                  {% endif %}                      
+                  <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/%EC%82%AC%EB%9E%8C%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" class="img-fluid" alt="character" style="width: 70%;">
+                </div>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated and isHost == True %}
+            <div style="text-align:center;">
+              <a class="btn btn-primary" onclick="clip(); return false;"><i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;내 편지함 공유하기</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 편지 작성하기 모달 -->
+<div class="modal fade in" id="createMessageModal" tabindex="-1" aria-labelledby="createMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">상대방에게 당신의 마음을 남겨주세요!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+                    <form id="contact-form" class="form" method="POST" role="form"> 
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="form-label" for="name">닉네임</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="당신의 닉네임을 입력하세요(10자 이하)." tabindex="1" required>
+                        </div>                            
+                                        
+                        <div class="form-group">
+                            <label class="form-label" for="title">편지 제목</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="편지 제목을 적어주세요." tabindex="3">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="left_time">공부 시간</label>
+                            <input type="range" name="left_time" id="left_time" min="0" max="3600" value= "1800" placeholder="상대방을 얼만큼 공부시킬까요?">
+                            <label class="form-label" for="left_time" style="color:gray;">최대: 60분</label>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-label" for="message_cover">편지 장식</label>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio1" value="1">
+                              <label class="form-check-label" for="inlineRadio1">❤️</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio2" value="2">
+                              <label class="form-check-label" for="inlineRadio2">🎁</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio3" value="3">
+                              <label class="form-check-label" for="inlineRadio3">💋</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio3" value="4">
+                              <label class="form-check-label" for="inlineRadio3">💯</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio3" value="5">
+                              <label class="form-check-label" for="inlineRadio3">🍫</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="message_cover" id="inlineRadio3" value="6">
+                              <label class="form-check-label" for="inlineRadio3">🍀</label>
+                            </div>                        
+                        </div>
+  
+                        <div class="form-group">
+                            <label class="form-label" for="content">편지 내용</label>
+                            <textarea rows="10" cols="50" name="content" class="form-control" id="content" placeholder="따뜻한 메세지를 남겨주세요." tabindex="4" required></textarea>                                 
+                        </div>            
+                    </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">작성</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- 편지 목록보기 모달 -->
+<div class="modal fade in" id="listMessageModal" tabindex="-1" aria-labelledby="listMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">도착한 마음: {{ len_message }}개
+          <span class="text-muted"><small>(열어본 마음: {{ len_open }}개)</small></span>
+          </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+                {% if messages %}
+                {% for m in messages %} 
+                <div class="col-2" style="text-align: center; font-size: 13px;">
+                  {% if m.left_time >= 1 and m.left_time <= 1200 %} 
+                    <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/clock3.png?raw=true" style="width: 100%;" alt="time">
+                    <small>{{ m.minute }}분{{ m.second }}초</small>
+
+                    {% elif m.left_time >= 1201 and m.left_time <= 2400 %}
+                    <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/clock2.png?raw=true" style="width: 100%;" alt="time">
+                    <small>{{ m.minute }}분{{ m.second }}초</small>
+
+                    {% elif m.left_time >= 2401 and m.left_time <= 3600 %}
+                    <img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/clock1.png?raw=true" style="width: 100%;" alt="time">
+                    <small>{{ m.minute }}분{{ m.second }}초</small>
+                    {% else %}
+                        {% if m.message_cover == 1 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/heart.png?raw=true" style="width: 100%;" alt="❤️"></a>
+                        {% endif %}
+                        {% if m.message_cover == 2 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/gift.png?raw=true" style="width: 100%;" alt="🎁"></a>
+                        {% endif %}
+                        {% if m.message_cover == 3 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/kiss.png?raw=true" style="width: 100%;" alt="💋"></a>
+                        {% endif %}
+                        {% if m.message_cover == 4 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/100.png?raw=true" style="width: 100%;" alt="💯"></a>
+                        {% endif %}
+                        {% if m.message_cover == 5 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/Chocolate.png.png?raw=true" style="width: 100%;" alt="🍫"></a>
+                        {% endif %}
+                        {% if m.message_cover == 6 %} 
+                        <a href="{% url 'message_detail' m.pk %}"><img src="https://github.com/jisoolee0929/LikeLion_Hackathon5/blob/main/image/clover.png?raw=true" style="width: 100%;" alt="🍀"></a>
+                        {% endif %}
+                    {% endif %} 
+                </div>
+                {% endfor %}
+                {% else %} 
+                <p>아직 도착한 마음이 없습니다.</p>
+                {% endif %}
+              </div>
+            <br/>
+            {% if len_message != 0 %}
+            <div class="row">
+                <p>편지를 읽고 싶다면 열심히 공부하세요!</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let timer
+var time = 0
+function starttimer(){
+    var min = ""
+    var sec = ""
+    timer = setInterval(function(){
+            min = parseInt(time/60);
+            sec = time%60;
+            document.getElementById("demo").innerHTML = min + "분" + sec + "초";
+            document.getElementById("totaltime").value = time;
+            time++;
+        }, 1000);
+}
+
+function stopTimer(){
+    clearInterval(timer);
+}
+
+function submitTimer(){
+    time = 0
+}
+
+
+function clip(){
+
+var url = '';
+var textarea = document.createElement("textarea");
+document.body.appendChild(textarea);
+url = window.document.location.href;
+textarea.value = url;
+textarea.select();
+document.execCommand("copy");
+document.body.removeChild(textarea);
+alert("내 편지함의 주소가 복사되었습니다.\n친구들이 편지를 써줄 수 있도록 SNS에 공유해보세요!")
+}
+
+</script>
+{% endblock %}
