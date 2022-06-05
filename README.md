@@ -1,5 +1,13 @@
 
-# LikeLion_Hackathon5
+# LikeLion_Hackathon5 
+pipenv shell
+pipenv install django==4.0.4
+pipenv install django-markdownx
+pipenv install django-crispy-forms
+pipenv install pillow
+pipenv install djangorestframework
+pipenv install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+pipenv install django-allauth
 
 # 다은
 5조 해커톤 파이팅
